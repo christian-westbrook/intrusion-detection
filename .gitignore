@@ -1,6 +1,7 @@
 # File types to ignore
 *.csv
 *.md5
+*checkpoint.ipynb
 
 # Directories to ignore
 report/template/
