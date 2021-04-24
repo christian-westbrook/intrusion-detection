@@ -62,14 +62,14 @@ from tensorflow import keras
 
 # #### Requirements
 # 
-# You need to have an account with [Kaggle](https://www.kaggle.com/). Once you have an account, navigate to Kaggle and then to the 'Account' tab of your user profile. Scroll down until you find the button 'Create New API Token'. Use this button to download an API token that will allow you to retrieve the dataset with the following program. On a machine running Windows 10, place the Kaggle API token at `C:\Users\<Windows-username>\.kaggle\kaggle.json` for the API to work.
+# You need to have an account with [Kaggle](https://www.kaggle.com/). Once you have an account, navigate to Kaggle and then to the 'Account' tab of your user profile. Scroll down until you find the button 'Create New API Token'. Use this button to download an API token that will allow you to retrieve the dataset using the following script. On a machine running Windows 10, place the Kaggle API token at `C:\Users\<Windows-username>\.kaggle\kaggle.json`.
 
 # #### Automated Retrieval
 
-# In[2]:
+# In[ ]:
 
 
-# Define all of the expected CSV files
+# Define all of the CSV files expected from the dataset
 files = [
     'Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv',
     'Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv',
@@ -81,9 +81,9 @@ files = [
     'Wednesday-workingHours.pcap_ISCX.csv'
 ]
 
-
-# In[3]:
-
+# Check if a root /data directory exists, and create it if it doesn't
+if not os.path.exists("../data/"):
+    os.makedirs("../data")
 
 # Retrieve the dataset in .zip archive format
 get_ipython().system('kaggle datasets download cicdataset/cicids2017 -q')
@@ -99,29 +99,7 @@ with ZipFile('../data/cicids2017.zip', 'r') as zipObj:
 # Move all CSV files from the unzipped folder structure into the root /data directory
 for index, file in enumerate(files):
     os.replace("../data/MachineLearningCSV/MachineLearningCVE/" + file, "../data/" + file)
-
-# Clean up the root /data directory
-os.rmdir("../data/MachineLearningCSV/MachineLearningCVE/")
-os.rmdir("../data/MachineLearningCSV/")
-os.remove("../data/cicids2017.zip")
-os.remove("../data/MachineLearningCSV.md5")
-
-
-# ## File Information
-# 
-# The CICIDS2017 dataset is a collection of simulated packet capture events labelled as either benign or attack events. The following is an example of records taken from the dataset.
-
-# In[4]:
-
-
-pandas.read_csv("../data/Monday-WorkingHours.pcap_ISCX.csv").head()
-
-
-# The packet capture data provided by the dataset is broken down into a series of CSV files organized by the day of the week at which particular packets were captured. For this work we'll combine these separate files into a single dataframe for simplified processing during our experiments.
-
-# In[5]:
-
-
+    
 # Read each CSV into a pandas dataframe
 frames = []
 for index, file in enumerate(files):
@@ -133,19 +111,26 @@ combined_frame = pandas.concat(frames, axis=0)
 # Write combined dataframe to disk
 combined_frame.to_pickle("../data/cicids2017.pkl")
 
-# Clean up CSV files
+# Clean up the root /data directory
 for index, file in enumerate(files):
     os.remove("../data/" + file)
+os.rmdir("../data/MachineLearningCSV/MachineLearningCVE/")
+os.rmdir("../data/MachineLearningCSV/")
+os.remove("../data/cicids2017.zip")
+os.remove("../data/MachineLearningCSV.md5")
 
 
-# Now that the organization of our dataset has been simplified we're ready to begin exploring the dataset.
+# ## File Information
+# 
+# The CICIDS2017 dataset is a collection of simulated packet capture events labelled as either benign or attack events. The following is an example of records taken from the dataset.
+
+# In[ ]:
+
+
+frame = pandas.read_pickle('../data/cicids2017.pkl')
+frame.head()
+
 
 # ## Data Exploration
 
 # ## Preprocessing
-
-# In[6]:
-
-
-frame = pandas.read_pickle('../data/cicids2017.pkl')
-
