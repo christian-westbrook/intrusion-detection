@@ -11,7 +11,7 @@
 # 
 # Some of the source code in this notebook makes assumptions about where you are running it. If you are planning on executing the code in this notebook, ensure that you are either running it within a clone of the [associated repository](https://github.com/christian-westbrook/intrusion-detection) at its default location, or that you understand how to adapt relative file paths to meet your needs. A good way to determine if a block of code makes this assumption is to look for instances where the `os` module is being used. If you aren't sure, feel free to clone a fresh copy of the repository and run your new copy of the notebook at its default location.
 # 
-# This notebook contains more than just source code. If you're only interested in using the source code, you may prefer to use the application instead of this notebook. The application is located in the root `/application` directory and presents a streamlined and interactive experience in comparison to this notebook. For instructions on how to use the application, refer to the README located in the root directory of the repository.
+# This notebook contains more than just source code. If you're only interested in using the source code, you may prefer to use our scripts instead of this notebook. These scripts are located in the root `/scripts` directory. For instructions on how to use them, refer to the README located in the root directory of the repository.
 
 # ## Imports
 # 
@@ -1074,7 +1074,7 @@ metrics_frame = pandas.DataFrame({'Method' : name_series, 'Precision' : precisio
 metrics_frame
 
 
-# As it relates to our intrusion detection task specifically, in my opinion the recall metric is the most important. The primary goal is to detect as many of the anomalies as possible to prevent attacks from causing damage to a system. With this in mind, it is made clear by our performance metrics that the Isolation Forest algorithm was the best at detecting anomalies, boasting a recall of 90.9%. The Local Outlier Factor method comes in second at a respectable 81.0% while the other three methods come up short.
+# For the evaluation of our models we have collected a series of three metrics, being precision, recall, and AUROC. As it relates to our intrusion detection task specifically, the recall metric is the most important to maximize. The primary goal of our task is to detect as many of the anomalies as possible to prevent attacks from causing damage to a system. With this in mind, it is made clear by our performance metrics that the Isolation Forest algorithm was the best at detecting anomalies, boasting a recall of 90.9%. The Local Outlier Factor method comes in second at a respectable 81.0% while the other three methods come up short.
 # 
 # The methods with the lowest recall, being the Mahalanobis Distance method and the K-Nearest Neighbors method, tell us something about the nature of anomalous points in our dataset. These scores imply that malicous packet events occur in relatively close proximity to the distribution of packet events, and that the nearest neighbors to a malicious event plotted in our dataset's state space are often benign events rather than anomalies. This is an interesting characteristic in that the anomalies are apparently able to blend in, to some extent, with normal events.
 # 
