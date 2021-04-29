@@ -1,8 +1,8 @@
-# Intrusion Detection
+# Applications of Anomaly Detection Techniques to Intrusion Detection
 
 *A data science project by Christian Westbrook.*
 
-In this project we experiment with how known anomaly detection techniques can be applied to the domain of intrusion detection.
+Intrusion detection is a common cybersecurity task involving the inspection of a networked environment for evidence of malicious activity. One approach to intrusion detection is to view the problem as a need to identify anomalous network activity. In this work we demonstrate that idea by performing a series of experiments applying known machine learning techniques for anomaly detection to an intrusion detection task. We employ the CICIDS2017 dataset of labeled network intrusion events in the training of our models. We set out to compare the effectiveness of multiple anomaly detection techniques in the task of identifying malicious packet events from the given dataset. To this end we experiment with applications of Mahalanobis distances, K-Nearest Neighbors, Local Outlier Factor, Isolation Forests, Multiple Linear Regression, and Principal Component Analysis to the network intrusion task. We found that models operating under the assumption that anomalies exist at a distance from normal data points scored poorly in recall while models operating under the assumption that anomalies exist in low density regions of the state space scored well in recall. We also discovered that most of our models struggled with precision, triggering an excessively high number of false alarms.
 
 ## Requirements
 
